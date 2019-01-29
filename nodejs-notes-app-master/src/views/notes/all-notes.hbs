@@ -62,8 +62,8 @@
       */
       var markers=[];
       // Array of markers
-      for(i =0;i<marks.length-1;i++){
-        marker={coords:{lat:marks[i+1][0],lng:marks[i+1][1]},
+      for(i =1;i<marks.length;i++){
+        marker={coords:{lat:marks[i][0],lng:marks[i][1]},
           iconImage:'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
           content:'<h1>Lynn MA</h1>'}
           markers.push(marker);
