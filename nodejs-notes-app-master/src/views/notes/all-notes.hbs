@@ -36,58 +36,31 @@
       // New map
       var map = new google.maps.Map(document.getElementById('map'), options);
       
-      //console.log(marks[1][0])
-      
-      // Listen for click on map
-      google.maps.event.addListener(map, 'click', function(event){
-        // Add marker
-        addMarker({coords:event.latLng});
-      });
-
-      /*
-      // Add marker
-      var marker = new google.maps.Marker({
-        position:{lat:42.4668,lng:-70.9495},
-        map:map,
-        icon:'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
-      });
-
-      var infoWindow = new google.maps.InfoWindow({
-        content:'<h1>Lynn MA</h1>'
-      });
-
-      marker.addListener('click', function(){
-        infoWindow.open(map, marker);
-      });
-      */
-      var markers=[];
+      var markers=[];//markers para los marcadores 
+      var markersP=[];//markers para los polylines
       // Array of markers
       for(i =1;i<marks.length;i++){
-        marker={coords:{lat:marks[i][0],lng:marks[i][1]},
-          iconImage:'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-          content:'<h1>Lynn MA</h1>'}
+        marker={coords:{lat:marks[i][0],lng:marks[i][1]}}
           markers.push(marker);
+        markerP={lat:marks[i][0],lng:marks[i][1]}
+        markersP.push(markerP)
       }
-      /*markers = [
-        {
-          coords:{lat:marks[1][0],lng:marks[1][1]},
-          iconImage:'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-          content:'<h1>Lynn MA</h1>'
-        },
-        {
-          coords:{lat:42.8584,lng:-70.9300},
-          content:'<h1>Amesbury MA</h1>'
-        },
-        {
-          coords:{lat:42.7762,lng:-71.0773}
-        }
-      ];*/
 
       // Loop through markers
       for(var i = 0;i < markers.length;i++){
         // Add marker
-        addMarker(markers[i]);
+        if(i==0 || i==markers.length-1){
+        addMarker(markers[i]);}
       }
+      var polyline = new google.maps.Polyline({
+        path:markersP,
+        geodesic: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+      });
+
+      polyline.setMap(map);
 
       // Add Marker Function
       function addMarker(props){
