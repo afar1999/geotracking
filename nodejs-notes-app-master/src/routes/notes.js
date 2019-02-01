@@ -66,4 +66,15 @@ router.delete('/notes/delete/:id', isAuthenticated, async (req, res) => {
   res.redirect('/notes');
 });
 
+router.get('/notes/show/:id', isAuthenticated, async(req, res) =>{
+  const coordinate = await Note.find({user: req.user.id, title: req.query.title});
+  const notes = await Note.find({user: req.user.id}).sort({date: 'desc'});
+  //const coordinate = "kgckjgf"
+  console.log(coordinate)
+  res.render('notes/all-notes', {
+    coordinate,
+    notes
+  });
+});
+
 module.exports = router;

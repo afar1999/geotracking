@@ -2,99 +2,25 @@
 <div class="row">
   {{#each notes}}
   <div class="col-md-3">
-    <div class="card">
+    <div id="padre{{title}}"class="card">
       <div class="card-body">
         <h4 class="card-title d-flex justify-content-between align-items-center">
           {{ title }} <a href="/notes/edit/{{_id}}"><i class="fas fa-edit"></i></a>
         </h4>
         <div id="bodydesc" style=" height: 200px; overflow-y: scroll;">
-          <p>{{ description }}</p>
+          <p id="1" >{{ description }}</p>
         </div>
         <!-- DELETE REQUEST -->
         <form action="/notes/delete/{{_id}}?_method=DELETE" method="POST">
           <input type="hidden" name="_method" value="DELETE">
           <button type="submit" class="btn btn-danger btn-block btn-sm">Delete</button>
         </form>
+        <form action='/notes/show/{{title}}', method='GET'>
+          <input type="hidden" name="title" value={{title}}>
+          <button style="background-color:#26bb32; color:rgb(255, 255, 255)"class="btn btn-block " type="submit">Map</button>
+        </form>
       </div>
     </div>
-    <style>
-  #map{
-    height:250px;
-    width:100%;
-  }
-</style>
-</head>
-<body>
-  <div id="map"></div>
-  <script>
-    var marks= {{description}};
-    function initMap(){
-      // Map options
-      var options = {
-        zoom:8,
-        center:{lat:marks[1][0],lng:marks[1][1]}
-      }
-
-      // New map
-      var map = new google.maps.Map(document.getElementById('map'), options);
-      
-      var markers=[];//markers para los marcadores 
-      var markersP=[];//markers para los polylines
-      // Array of markers
-      for(i =1;i<marks.length;i++){
-        marker={coords:{lat:marks[i][0],lng:marks[i][1]}}
-        markers.push(marker);
-        markerP={lat:marks[i][0],lng:marks[i][1]}
-        markersP.push(markerP);
-      }
-
-      // Loop through markers
-      for(var i = 0;i < markers.length;i++){
-        // Add marker
-        if(i==0 || i==markers.length-1){
-        addMarker(markers[i]);}
-      }
-      var polyline = new google.maps.Polyline({
-        path:markersP,
-        geodesic: true,
-        strokeColor: '#FF0000',
-        strokeOpacity: 1.0,
-        strokeWeight: 2
-      });
-
-      polyline.setMap(map);
-
-      // Add Marker Function
-      function addMarker(props){
-        var marker = new google.maps.Marker({
-          position:props.coords,
-          map:map,
-          //icon:props.iconImage
-        });
-
-        // Check for customicon
-        if(props.iconImage){
-          // Set icon image
-          marker.setIcon(props.iconImage);
-        }
-
-        // Check content
-        if(props.content){
-          var infoWindow = new google.maps.InfoWindow({
-            content:props.content
-          });
-
-          marker.addListener('click', function(){
-            infoWindow.open(map, marker);
-          });
-        }
-      }
-    }
-  </script>
-  <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLfvcsagRYKp9CgzE3Uq2FRJLk-YnTvZI&callback=initMap">
-    </script>
-</body>
   </div>
   {{else}}
   <div class="card mx-auto">
@@ -106,3 +32,27 @@
   </div>
   {{/each}}
 </div>
+  <br>
+  <div id="map"></div>
+  
+  
+  {{#each coordinate}}
+    <script>
+      var coordinates = "{{description}}"
+    </script>
+  {{/each}}
+  <script>
+      function initMap() {
+        console.log(coordinates);
+        var map;
+        map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: -34.397, lng: 150.644},
+        zoom: 8
+        });
+      
+      }
+  </script>
+
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLfvcsagRYKp9CgzE3Uq2FRJLk-YnTvZI&callback=initMap">
+</script>
