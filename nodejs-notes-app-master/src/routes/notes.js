@@ -43,15 +43,21 @@ router.get('/notes', isAuthenticated, async (req, res) => {
   res.render('notes/all-notes', { notes });
 });
 router.post('/notes/share-note', isAuthenticated, async (req, res) => {
-  var {title, description}=req.body;
-  const newNote = new Note({title, description});
+  var {title,description}=req.body;
+  const newNote = new Note({title});
+  console.log(req.body);
   var user =description.split(",",1);
   var usuario= user[0];
   usuario=usuario.substring(1,usuario.length);
   var notes = await User.find({name:usuario})
+  var descrip = await Note.find({title:title})
   var id =notes[0].id;
+  var descriptio= descrip[0].description
+  console.log(descriptio)
   newNote.user=id;
+  newNote.description=descriptio
   await newNote.save();
+
   req.flash('success_msg', 'Note Shared Successfully');
     res.redirect('/notes');
 });
