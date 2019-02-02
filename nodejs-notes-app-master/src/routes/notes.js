@@ -3,6 +3,7 @@ const router = express.Router();
 
 // Models
 const Note = require('../models/Note');
+const User= require('../models/User');
 
 // Helpers
 const { isAuthenticated } = require('../helpers/auth');
@@ -40,6 +41,19 @@ router.post('/notes/new-note', isAuthenticated, async (req, res) => {
 router.get('/notes', isAuthenticated, async (req, res) => {
   const notes = await Note.find({user: req.user.id}).sort({date: 'desc'});
   res.render('notes/all-notes', { notes });
+});
+router.post('/notes/share-note', isAuthenticated, async (req, res) => {
+  var {title, description}=req.body;
+  const newNote = new Note({title, description});
+  var user =description.split(",",1);
+  var usuario= user[0];
+  usuario=usuario.substring(1,usuario.length);
+  var notes = await User.find({name:usuario})
+  var id =notes[0].id;
+  newNote.user=id;
+  await newNote.save();
+  req.flash('success_msg', 'Note Shared Successfully');
+    res.redirect('/notes');
 });
 
 // Edit Notes
