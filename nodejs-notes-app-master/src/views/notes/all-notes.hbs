@@ -43,12 +43,44 @@
   {{/each}}
   <script>
       function initMap() {
-        console.log(coordinates);
-        var map;
-        map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: -34.397, lng: 150.644},
+        var marks= coordinates.split(",[");
+        
+        for(i=1;i<marks.length;i++){
+          marks[i]=marks[i].split(",");
+          marks[i][1]=marks[i][1].substring(0,marks[i][1].length-2)
+        }
+        var map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat:parseFloat(marks[1][0]),lng:parseFloat(marks[1][1])},
         zoom: 8
         });
+        marks=marks.splice(1,marks.length);
+        console.log(marks)
+        for (var i = 0; i < marks.length; i++) {
+          if(i==0||i==marks.length-1){
+            var marker = new google.maps.Marker({
+              position: {lat:parseFloat(marks[i][0]),lng:parseFloat(marks[i][1])},
+              map: map,
+              title: 'Hello World!'
+            });
+          }
+        }
+        var markerP=[];
+        var markersP=[];
+        for(i=0;i<marks.length;i++){
+          marks[i][0]=parseFloat(marks[i][0]);
+          marks[i][1]=parseFloat(marks[i][1]);
+          markerP={lat:marks[i][0],lng:marks[i][1]}
+          markersP.push(markerP);
+        }
+        console.log(marks);
+        var polyline = new google.maps.Polyline({
+          path:markersP,
+          geodesic: true,
+          strokeColor: '#FF0000',
+          strokeOpacity: 1.0,
+          strokeWeight: 2
+        });
+        polyline.setMap(map);
       
       }
   </script>
