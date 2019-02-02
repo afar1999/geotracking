@@ -22,8 +22,9 @@ router.post('/users/signup', async (req, res) => {
   } else {
     // Look for email coincidence
     const emailUser = await User.findOne({email: email});
-    if(emailUser) {
-      req.flash('error_msg', 'The Email is already in use.');
+    const nameUser = await User.findOne({name: name});
+    if(emailUser || nameUser) {
+      req.flash('error_msg', 'The Email or name are already in use.');
       res.redirect('/users/signup');
     } else {
       // Saving a New User
