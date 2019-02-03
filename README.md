@@ -1,6 +1,7 @@
 # geotracking
 Geotracking
 Proyecto 1 topicos especiales en telemática
+
     Aplicación que permita desde un teléfono inteligente registrar los puntos sobre las rutas que desee seguir un usuario(tracking-gps), para poder visualizar la ruta que siguio y poderla compartir con otros usuarios.
 
 Construido con:
@@ -28,6 +29,7 @@ Modelo de datos
         }
 
 Despliegue
+
 aavenda1.dia.eafit.edu.co
 
 http://ec2-18-223-151-14.us-east-2.compute.amazonaws.com/notes
