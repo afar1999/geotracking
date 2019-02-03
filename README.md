@@ -29,6 +29,7 @@ Modelo de datos
 
 Despliegue
 aavenda1.dia.eafit.edu.co
+
 http://ec2-18-223-151-14.us-east-2.compute.amazonaws.com/notes
 
 Desarrollado por:
