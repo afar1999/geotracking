@@ -9,7 +9,13 @@ Construido con:
     MongoDB 
     Express 
     Javascript
-
+Instalación
+1. instalar mongoDB
+     https://docs.mongodb.com/manual/installation/
+2. instalar modulos:
+    npm install
+3. iniciar la aplicacion
+    npm start 
 Modelo de datos
     
         User:
@@ -30,9 +36,9 @@ Modelo de datos
 
 Despliegue
 
-aavenda1.dia.eafit.edu.co
+    aavenda1.dia.eafit.edu.co
 
-http://ec2-18-223-151-14.us-east-2.compute.amazonaws.com/notes
+    http://ec2-18-223-151-14.us-east-2.compute.amazonaws.com/notes
 
 Desarrollado por:
     Andres Felipe Avendaño Restrepo 
